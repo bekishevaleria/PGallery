@@ -2,21 +2,16 @@ package com.example.pgallery.db;
 
 import android.content.Context;
 import android.os.AsyncTask;
-
 import androidx.room.Room;
-
 import com.example.pgallery.Models.Photo;
-
 import java.util.List;
 
 public class Repository {
     private String DB_NAME = "db_task";
-
     private PhotosDB db;
     public Repository(Context context) {
         db = Room.databaseBuilder(context, PhotosDB.class, DB_NAME).build();
     }
-
 
     public void insertPhoto(final Photo photo) {
         new AsyncTask<Void, Void, Void>() {
@@ -28,8 +23,6 @@ public class Repository {
         }.execute();
     }
 
-
-
     public void deleteTask(final Photo photo) {
         new AsyncTask<Void, Void, Void>() {
             @Override
@@ -39,7 +32,6 @@ public class Repository {
             }
         }.execute();
     }
-
 
     public List<Photo> LoadAll() {
         return db.photoDao().LoadAll();

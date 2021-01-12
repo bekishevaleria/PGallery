@@ -21,12 +21,12 @@ public abstract class PhotosDB extends RoomDatabase {
     static final ExecutorService dbWriteExecutor =
             Executors.newFixedThreadPool(NUMBER_OF_THREADS);
 
-    static PhotosDB getDatabase(final Context context) {
+    public static PhotosDB getDatabase(final Context context) {
         if (INSTANCE == null) {
             synchronized (PhotosDB.class) {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-                            PhotosDB.class, "database")
+                            PhotosDB.class, "database").allowMainThreadQueries()
                             .build();
                 }
             }

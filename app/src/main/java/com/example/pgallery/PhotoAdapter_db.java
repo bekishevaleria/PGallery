@@ -21,14 +21,16 @@ import retrofit2.Callback;
 
 import static android.widget.Toast.LENGTH_SHORT;
 
-public class PhotoAdapter extends RecyclerView.Adapter <PhotoAdapter.ViewHolder> {
-    private final Callback<Example> photoGallery;
+
+public class PhotoAdapter_db extends RecyclerView.Adapter <PhotoAdapter_db.ViewHolder>{
+    private final View.OnClickListener mainActivity;
     private final List<Photo> values;
     private OnInsertListener onInsertListener;
 
-    PhotoAdapter(Callback<Example> parent, List<Photo> items) {
-        photoGallery = parent;
+    public PhotoAdapter_db(View.OnClickListener parent, List<Photo> items) {
+        mainActivity = parent;
         values = items;
+
     }
 
     @Override
@@ -47,7 +49,6 @@ public class PhotoAdapter extends RecyclerView.Adapter <PhotoAdapter.ViewHolder>
                 "_" + values.get(position).getSecret() + "_q.jpg";
         Picasso.get().load(s).into(holder.image);
         holder.itemView.setTag(values.get(position));
-        holder.title.setText(values.get(position).getTitle());
     }
 
     @Override
@@ -65,21 +66,10 @@ public class PhotoAdapter extends RecyclerView.Adapter <PhotoAdapter.ViewHolder>
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         final ImageView image;
-        final TextView title;
 
         ViewHolder(View view) {
             super(view);
-            title = (TextView) view.findViewById(R.id.tv_photo);
             image = view.findViewById(R.id.iv);
-            image.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Log.i("HORSE", String.valueOf(values.get(ViewHolder.this.getAdapterPosition()) == null));
-                    onInsertListener.onInsert(values.get(ViewHolder.this.getAdapterPosition()));
-                    Toast toast = Toast.makeText(view.getContext(), "Added to BD", LENGTH_SHORT);
-                    toast.show();
-                }
-            });
         }
     }
 }
